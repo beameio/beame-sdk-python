@@ -41,14 +41,9 @@ setup(
     ],
     # TODO: check about the comma separation
     keywords='beame, SSL cert, x509, localhost, proxy tunnel, ssl tunnel, self signed , CA, signing, crypto',
-    packages=['beame']
-
-    ### # List additional groups of dependencies here (e.g. development
-    ### # dependencies). You can install these using the following syntax,
-    ### # for example:
-    ### # $ pip install -e .[dev,test]
-    ### extras_require={
-    ###     'dev': ['check-manifest'],
-    ###     'test': ['coverage'],
-    ### },
+    packages=['beame'],
+    install_requires = ['rsa'],
+    extras_require={
+        'test': ['pyunit'],
+    }
 )
