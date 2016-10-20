@@ -1,6 +1,9 @@
 import json
 import time
+
 import beame.credentials
+import beame.common_utils
+import beame.store
 
 # __all__ = ['create']
 
@@ -23,3 +26,17 @@ def create(data, signing_creds, ttl=10):
     token = json.dumps(token).encode('UTF-8')
 
     return json.dumps(signing_creds.sign(token))
+
+def validate(token):
+    auth_token = beame.common_utils.parse(token)
+    print("*** AUTH TOKEN", auth_token)
+
+    for k in 'signedData', 'signedBy', 'signature':
+        if k not in auth_token:
+            raise ValueError("token has no .{}".format(k))
+
+    creds = beame.store.get(auth_token['signedBy'])
+    signature_ok = creds.check_signature(auth_token)
+    print("*** SIGNATURE_OK", signature_ok)
+    if not signature_ok:
+        return None

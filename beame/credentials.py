@@ -6,9 +6,9 @@ class Credentials:
 
     SIGNING_HASH = 'SHA-256'
 
-    def __init__(self, fqdn=None, cert=None, private_key=None):
+    def __init__(self, fqdn=None, public_key=None, private_key=None):
         self.fqdn = fqdn
-        self.cert = cert
+        self.public_key = public_key
         self.private_key = private_key
 
     def need_field(self, attr, method):
@@ -33,3 +33,7 @@ class Credentials:
         }
 
         return message
+
+    def check_signature(self, data):
+        public_key = rsa.PublicKey.load_pkcs1(self.public_key)
+        return rsa.verify(data['signedData'].encode('UTF-8'), base64.b64decode(data['signature']), public_key)
