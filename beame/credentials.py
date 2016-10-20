@@ -5,7 +5,7 @@ import rsa
 class Credentials:
 
     SIGNING_HASH = 'SHA-256'
-    
+
     def __init__(self, fqdn=None, cert=None, private_key=None):
         self.fqdn = fqdn
         self.cert = cert
@@ -15,12 +15,12 @@ class Credentials:
 
         if not hasattr(self, attr):
             raise RuntimeError("beame.credentials.Credentials must have {} to {}()".format(attr, method))
-            
+
     def sign(self, data):
 
         if not isinstance(data, bytes):
             raise ValueError("data must be bytes")
-        
+
         self.need_field('fqdn', 'sign')
         self.need_field('private_key', 'sign')
 

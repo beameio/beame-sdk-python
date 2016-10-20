@@ -11,7 +11,7 @@ def create(data, signing_creds, ttl=10):
 
     if not isinstance(data, str):
         raise ValueError("data must be a string")
-        
+
     now = int(time.time())
 
     token = {
@@ -19,7 +19,7 @@ def create(data, signing_creds, ttl=10):
         'valid_till': now + ttl,
         'data': data
     }
-    
+
     # token = base64.b64encode(token)
     token = json.dumps(token).encode()
 
