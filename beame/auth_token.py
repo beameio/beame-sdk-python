@@ -5,6 +5,8 @@ import beame.credentials
 import beame.common_utils
 import beame.store
 
+TIME_FUZZ = 5 # Seconds
+
 # __all__ = ['create']
 
 def create(data, signing_creds, ttl=10):
@@ -39,4 +41,16 @@ def validate(token):
     signature_ok = creds.check_signature(auth_token)
     print("*** SIGNATURE_OK", signature_ok)
     if not signature_ok:
-        return None
+        raise ValueError("Bad signature")
+
+    signed_data = beame.common_utils.parse(auth_token['signedData'])
+
+    now = int(time.time())
+
+    if signed_data['created_at'] > now + TIME_FUZZ:
+        raise ValueError("created_at is in future - invalid token or incorrect clock")
+
+    if signed_data['valid_till'] < now - TIME_FUZZ:
+        raise ValueError("valid_till is in the past - token expired")
+
+    return auth_token
