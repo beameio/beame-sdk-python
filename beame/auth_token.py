@@ -20,7 +20,6 @@ def create(data, signing_creds, ttl=10):
         'data': data
     }
 
-    # token = base64.b64encode(token)
-    token = json.dumps(token).encode()
+    token = json.dumps(token).encode('UTF-8')
 
-    return signing_creds.sign(token)
+    return json.dumps(signing_creds.sign(token))

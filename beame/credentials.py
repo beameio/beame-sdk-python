@@ -19,7 +19,7 @@ class Credentials:
     def sign(self, data):
 
         if not isinstance(data, bytes):
-            raise ValueError("data must be bytes")
+            raise ValueError("beame.credentials.Credentials.sign(): data must be bytes")
 
         self.need_field('fqdn', 'sign')
         self.need_field('private_key', 'sign')
@@ -27,9 +27,9 @@ class Credentials:
         private_key = rsa.PrivateKey.load_pkcs1(self.private_key)
 
         message = {
-            'signedData': data,
+            'signedData': str(data, 'UTF-8'),
             'signedBy': self.fqdn,
-            'signature': base64.b64encode(rsa.sign(data, private_key, self.SIGNING_HASH))
+            'signature': str(base64.b64encode(rsa.sign(data, private_key, self.SIGNING_HASH)), 'UTF-8')
         }
 
         return message
