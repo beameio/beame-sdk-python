@@ -7,7 +7,7 @@ import beame.store
 
 TIME_FUZZ = 5 # Seconds
 
-# __all__ = ['create']
+__all__ = ['create', 'validate']
 
 def create(data, signing_creds, ttl=10):
 
