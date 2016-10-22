@@ -31,15 +31,21 @@ def create(data, signing_creds, ttl=10):
 
 def validate(token):
     auth_token = beame.common_utils.parse(token)
-    print("*** AUTH TOKEN", auth_token)
+    # print("*** AUTH TOKEN", auth_token)
+
+    if not isinstance(auth_token, dict):
+        raise ValueError("auth_token must be a dict. Token passed to validate() is probably in invalid format.")
 
     for k in 'signedData', 'signedBy', 'signature':
         if k not in auth_token:
             raise ValueError("token has no .{}".format(k))
 
+    if not isinstance(auth_token['signedData'], str):
+        raise ValueError("auth_token signedData must be a string")
+
     creds = beame.store.get(auth_token['signedBy'])
     signature_ok = creds.check_signature(auth_token)
-    print("*** SIGNATURE_OK", signature_ok)
+    # print("*** SIGNATURE_OK", signature_ok)
     if not signature_ok:
         raise ValueError("Bad signature")
 
