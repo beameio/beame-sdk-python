@@ -33,9 +33,9 @@ print("Internal token validation")
 
 try:
     data = auth_token.validate(token)
-    print("Good signature, data", data)
+    print("Good signature, data:", data)
 except ValueError as e:
-    print("Bad signature", e)
+    print("Bad signature:", e)
 
 # ---------- Token validation code, for testing tokens with CLI ----------
 
