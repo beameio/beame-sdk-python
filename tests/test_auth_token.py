@@ -3,7 +3,7 @@
 import os
 import unittest
 
-from beame import auth_token, credentials, store
+from beame import auth_token, common_utils, credentials, store
 
 e = os.environ
 
@@ -25,6 +25,8 @@ class TokenTestCase(unittest.TestCase):
         print('*** TOKEN CREATED', token)
         data = auth_token.validate(token)
         print('*** TOKEN VALIDATE DATA', data)
+        data = common_utils.parse(data['signedData'])['data']
+        self.assertEqual(data, self.DATA)
 
 
 if __name__ == "__main__":
