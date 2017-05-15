@@ -25,7 +25,7 @@ setup(
     long_description=long_description,
     url='https://github.com/beameio/beame-sdk-python',
     author='beame.io',
-    author_email='sophia@beame.io',
+    author_email='support@beame.io',
     license='MIT',
     classifiers=[
         # How mature is this project? Common values are
