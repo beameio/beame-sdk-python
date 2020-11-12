@@ -1,3 +1,5 @@
+*2020-12 - The project is discontinued*
+
 beame-sdk-python
 ================
 
